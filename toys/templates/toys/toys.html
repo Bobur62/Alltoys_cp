@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        {{ welcome_text }}
+        All toys
     </div>
 
     <div>
@@ -15,6 +15,15 @@
                 <td style="width: 100px"><a href="{% url 'toys' %}">Toys</a></td>
                 <td style="width: 100px"><a href="#">Users</a></td>
             </tr>
+        </table>
+
+        <table>
+            {% for toy in toys %}
+                 <tr>
+                     <td>{{ forloop.counter }}</td>
+                     <td>{{ toy.name }}</td>
+                </tr>
+            {% endfor %}
         </table>
     </div>
 <hr>
