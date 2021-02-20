@@ -18,10 +18,17 @@
         </table>
 
         <table>
-            {% for toy in toys %}
+            {% for toy in object_list %}
                  <tr>
                      <td>{{ forloop.counter }}</td>
+                     <td><a href="{% url 'toy_detail' pk=toy.pk %}">{{ toy.pk }}</a></td>
                      <td>{{ toy.name }}</td>
+                     <td>{{ toy.user.email }}</td>
+                     <td>
+                         {% for tag in toy.tags.all %}
+                            {{ tag.name }}
+                         {% endfor %}
+                     </td>
                 </tr>
             {% endfor %}
         </table>

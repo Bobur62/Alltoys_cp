@@ -1,0 +1,30 @@
+{% extends 'markets/base.html' %}
+
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block content %}
+<br>
+<br>
+<div class="container">
+    <div class="card-deck">
+      {% for product in object_list %}
+      {% if forloop.counter0|divisibleby:3 %} <div class="container"> <div class="row"> {% endif %}
+      <div class="col-4">
+          <div class="card" style="margin-bottom:35px">
+            <img class="card-img-top" style="width: 320px; height:200px" src="{{ product.images.url }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.description }}</h5>
+              <p class="card-text">{{ product.product }}</p>
+              <p class="card-text" style="color: red">{{ product.price }}</p>
+              <p class="card-text"><small class="text-muted">{{ market.category }}</small></p>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

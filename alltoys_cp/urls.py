@@ -15,10 +15,42 @@ Including another URLconf
 """
 import debug_toolbar
 from django.contrib import admin
-from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
+from django.urls import path, include, reverse
+from django.views.generic import RedirectView
+
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
+    path('', include('toys.urls')),    #, namespace="toys"
     path('admin/', admin.site.urls),
+    #Adminni passwordini o`zgartirish
+    path(
+        'admin/password_reset/',
+        auth_views.PasswordResetView.as_view(),
+        name='admin_password_reset',
+    ),
+    path(
+        'admin/password_reset/done/',
+        auth_views.PasswordResetDoneView.as_view(),
+        name='password_reset_done',
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(),
+        name='password_reset_confirm',
+    ),
+    path(
+        'reset/done/',
+        auth_views.PasswordResetCompleteView.as_view(),
+        name='password_reset_complete',
+    ),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('', include('toys.urls'))
+    # path('markets/market/', RedirectView.as_view(url='http://127.0.0.1:8000/markets')),
+    # path('markets/', include('markets.urls')),
 ]
+
+if settings.DEBUG: # new
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
