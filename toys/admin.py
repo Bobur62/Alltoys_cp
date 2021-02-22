@@ -21,6 +21,9 @@ from toys.services.send_weekly_report import send_weekly_toys_count
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     list_display = ("street", "city", "zip_code")
+    list_filter = ("city",)
+    search_fields = ("street", "city",)
+
 
 # *********************************************************************************************
 
@@ -67,7 +70,7 @@ class UserAdmin(UserAdmin):
     form = UserAdminForm  #forms.py da emailni tekshiradi
     fieldsets = (
         (None, {'fields': ('username', 'password', 'password_change_link')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'phone', 'email', 'address')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser'),
         }),
@@ -94,6 +97,8 @@ class TagAdmin(admin.ModelAdmin):
 
 class ToyTagsModel(admin.TabularInline):
     model = Toy.tags.through
+    # autocomplete_fields = ["tags"]
+    extra = 1
 
 
 @admin.register(Toy)
@@ -103,5 +108,6 @@ class ToyAdmin(admin.ModelAdmin):
     list_filter = ("type",)
     search_fields = ("name", "description")
     inlines = [ToyTagsModel]
+
 
 # ***********************************************************************************************

@@ -21,3 +21,4 @@ class ToyAdminForm(forms.ModelForm):
         instance = kwargs.pop("instance", None)
         
         super(ToyAdminForm, self).__init__(*args, **kwargs)
+
